@@ -12,6 +12,7 @@
  */
 import { app, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
+import { ipcMain } from 'electron';
 
 let mainWindow = null;
 
@@ -84,3 +85,10 @@ app.on('ready', async () => {
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 });
+
+
+ipcMain.on('ativar', (event, arg) => {
+  console.log('-->',arg);
+  //event.sender.send('asynchronous-reply', 'pong')
+});
+
