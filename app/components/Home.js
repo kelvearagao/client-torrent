@@ -5,6 +5,7 @@ import styles from './Home.css';
 import { ipcRenderer } from 'electron';
 import fs from 'fs';
 import Decoder from '../utils/Decoder';
+import TorrentTable from './TorrentTable';
 
 type Props = {};
 
@@ -16,8 +17,7 @@ export default class Home extends Component<Props> {
 
 
     this.state = {
-      selectTorrent: {},
-      announceList: []
+      selectTorrent: null,
     };
   }
 
@@ -35,9 +35,9 @@ export default class Home extends Component<Props> {
       var tmp = Decoder.decode(buf);
       console.log(tmp);
       console.log(Decoder.createObj(tmp));
-      /*this.setState({
-        selectTorrent: Decoder.creatObj(tmp)
-      });*/
+      this.setState({
+        selectTorrent: Decoder.createObj(tmp)
+      });
 
     });
   }
@@ -59,36 +59,14 @@ export default class Home extends Component<Props> {
               <tr>
                 <td>tt</td>
                 <td>
-                  <button onClick={() => this.handleAtivar()} >Ativar</button>
+                  <button className="btn btn-primary" onClick={() => this.handleAtivar()} >Ativar</button>
                 </td>
               </tr>
             </tbody>
           </table>
-          {/*
-          <table className="table table-bordered table-sm">
-            <tbody>
-              <tr>
-                <td>Announce</td>
-                <td>{ this.state.selectTorrent.announce }</td>
-              </tr>
-
-              { this.state.selectTorrent.announceList != null ?
-              <tr>
-                <td>Announce List</td>
-                <td>
-                  <ul>
-                    {this.state.selectTorrent.announceList.map((e) => {
-                      return (
-                        <li>{ e.value }</li>
-                      );
-                    })}
-                  </ul>
-                </td>
-              </tr> : null}
-
-            </tbody>
-          </table>
-          */}
+          
+          { !this.state.selectTorrent ? null : 
+          <TorrentTable selectTorrent={this.state.selectTorrent} /> }
         </div>
       </div>
     );
