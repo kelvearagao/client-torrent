@@ -9,8 +9,6 @@ export default class Decoder {
         var b = buffer.slice(index + 1, index + num + 1);
         var text = b.toString('utf8');
 
-        //console.log(text);
-
         begin = index + num + listEnd;
 
         return {
@@ -19,16 +17,10 @@ export default class Decoder {
         };
 	}
 
-	/*static getType(key) {
-		if(['announce', 'announce list', 'length', ])
-	}*/
-
 	static decodeInteger(buffer, begin) {
 		var index = buffer.indexOf('e', begin);
 		var text = buffer.slice(begin + 1, index).toString('utf8');
 	    begin = index;
-
-	    //console.log(text);
 
         return {
         	cont: begin,
@@ -63,15 +55,9 @@ export default class Decoder {
 	static decode(buf) {
 		var elements = [];
 	    var buffer = buf;
-	    var length = buffer.length;
 	    var cont = 0;
-	    var begin = buffer.indexOf('infod');
-	    //var ch = buffer.slice(begin + 4, begin + 4 +1).toString('utf8');
-	    var result = null;
-	    cont = begin + 4;
 
-	    cont = 0;
-	    while(cont < length) {
+	    while(cont < buffer.length) {
 	        var ch = buffer.slice(cont, cont+1).toString('utf8');
 	        if(ch == 'd') {
 	            elements.push({value: '{'});
@@ -110,13 +96,8 @@ export default class Decoder {
 	        }
 	        else
 	        if(ch == 'e') {
-	         	elements.push({value: '}'});   
-	            //result = buffer.slice(begin + 4, cont + 1);
-	            //console.log('->',buffer.slice(begin + 4, cont + 1).toString('utf8'));
-	            //break;
+	         	elements.push({value: '}'});
 	        }
-
-	        //console.log('->',buffer.slice(cont, cont+1).toString('utf8'));
 	        
 	        cont++;
 	    }
@@ -157,7 +138,6 @@ export default class Decoder {
 
 	static createObj(elements) {
 		var result = this.createStr(elements);
-		console.log(result);
 		return JSON.parse(result);
 	}
 

@@ -24,17 +24,11 @@ export default class Home extends Component<Props> {
   handleAtivar() {
     //console.log('ativar 1');
     //ipcRenderer.send('ativar', {id: 1});
-
     var result = null;
 
     fs.readFile('tt.torrent', (err, buf) => {
-      //console.log(buf.toString('utf8'));
-      //console.log(err);
-
-
       var tmp = Decoder.decode(buf);
-      console.log(tmp);
-      console.log(Decoder.createObj(tmp));
+
       this.setState({
         selectTorrent: Decoder.createObj(tmp)
       });
